@@ -23,5 +23,5 @@ jobs:
       
       - name: TRYING TO LOOP
         run: for something in ${{ github.event.commits }} do echo "$something" done
-        shell: \bash
+        shell: bash
       
