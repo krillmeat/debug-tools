@@ -19,5 +19,5 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
 
       - name: CHECK COMMIT
-        run: echo ${{ toJson(github.event.commits[0]) }}
+        run: echo ${{ github.event.commits[0].message }}
       
