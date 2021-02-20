@@ -10,10 +10,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      -name: Checkout code
-       uses: actions/checkout@latest
+      - name: Checkout code
+        uses: actions/checkout@latest
 
-      -name: Run Check Commit Label
-       uses: ./.github/actions/commit-check-action.yml
-       env: DEFAULT_BRANCH: main
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run Check Commit Label
+        uses: ./.github/actions/commit-check-action.yml
+        env: DEFAULT_BRANCH: main
+             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
