@@ -22,6 +22,6 @@ jobs:
         run: echo "MESSAGE = ${{ github.event.commits[0].message }}"
       
       - name: TRYING TO LOOP
-        run: for something in ${{ github.event.commits }}; do echo "$something"; done
+        run: for something in ${{ github.event.commits }}; do echo "$something.message"; done
         shell: bash
       
