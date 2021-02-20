@@ -23,4 +23,5 @@ jobs:
       
       - name: TRYING TO LOOP
         run: for /F "tokens=2 delims==" %%s in ('${{ github.event.commits }}') do echo %%s
+        shell: bash
       
