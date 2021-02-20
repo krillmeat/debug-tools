@@ -19,5 +19,5 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
 
       - name: CHECK COMMIT
-        run: echo $(git log --format=%B ${{ github.event.commits[0].message }})
+        run: echo "MESSAGE = ${{ github.event.commits[0].message }}"
       
