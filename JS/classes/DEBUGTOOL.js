@@ -8,12 +8,14 @@ class DEBUGTOOL{
   constructor(onStart,debugColor){
     this.PARAM_OPTIONS = ["debug","debug-start","debug-visual","debug-grid"];
 
-    this._debugColor = debugColor ? debugColor : "#27AE60";  // The Color used by the debug messaging in the console
-    this.elem = this.buildDebugElement();                   // The HTML Element that contains the Debug Tools
-    this.debugQueryParams = this.setupDebugQueryParams();   // Collects all Query Params into an Object
+    this._debugColor = debugColor ? debugColor : "#27AE60";   // The Color used by the debug messaging in the console
+    this._elem = this.buildDebugElement();                    // The HTML Element that contains the Debug Tools
+    this._debugQueryParams = this.setupDebugQueryParams();    // Collects all Query Params into an Object
+
+    this.debouncer = false;                                   // Used by event listeners for reducing input counts
 
     // If the debug tools should start immediately, run at the very start
-    if(onStart || this.debugQueryParams.debug) this.runOnStart();
+    if(onStart || this.debugQueryParams.debug) this.runOnStart()
   }
 
   /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -33,6 +35,8 @@ class DEBUGTOOL{
   buildDebugElement(){
     let debugElem = document.createElement("div");
         debugElem.id = "debug-tools";
+        debugElem.style.background = this.debugColor;
+        debugElem.innerHTML = `<p class='title'>Debug Tools</p><p class='screen-dimensions'>${window.innerWidth} / ${window.innerHeight}</p><button class='show-debug-tools'></button>`;
 
     return debugElem;
   }
@@ -46,6 +50,8 @@ class DEBUGTOOL{
    */
   runOnStart(){
     this.debugLog("Enabling Debug Tools...");
+    document.body.appendChild(this.elem);
+    this.setupEventHandlers();
   }
 
   /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -92,11 +98,38 @@ class DEBUGTOOL{
     return debugQueryParams;
   }
 
+  /**
+   * RESIZE EVENTS
+   * ------------------------------------------------------------
+   * All of the things that run whenever the window is resized
+   * ------------------------------------------------------------
+   */
+  resizeEvents(){
+    // Gather the Screen Dimensions
+    this.elem.querySelector(".screen-dimensions").innerHTML = `${window.innerWidth} / ${window.innerHeight}`;
+  }
+
+  /**
+   * SETUP EVENT HANDLERS
+   * ------------------------------------------------------------
+   * Gets all of the events set up
+   * ------------------------------------------------------------
+   */
+  setupEventHandlers(){
+    let obj = this;
+    window.addEventListener('resize', function(){
+      clearTimeout(obj.debouncer);
+      obj.debouncer = setTimeout(obj.resizeEvents.bind(obj),50);
+    })
+  }
+
   /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   ::::::::::::::::::::                                                                         ::::::::::::::::::::
   ::::::::::::::::::::  GETTERS                                                                ::::::::::::::::::::
   ::::::::::::::::::::                                                                         ::::::::::::::::::::
   :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
 
+  get elem(){ return this._elem }
   get debugColor(){ return this._debugColor }
+  get debugQueryParams(){ return this._debugQueryParams }
 }
