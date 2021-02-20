@@ -11,7 +11,7 @@ jobs:
 
     steps:
       -name: Checkout code
-       uses: actions/checkout@v2
+       uses: actions/checkout@latest
 
       -name: Run Check Commit Label
        uses: ./.github/actions/commit-check-action.yml
