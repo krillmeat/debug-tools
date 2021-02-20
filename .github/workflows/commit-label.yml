@@ -1,0 +1,27 @@
+name: Commit-Label
+
+# Run this workflow every time a new commit pushed to your repo
+on: push
+
+jobs:
+  # Set the job key. The key is displayed as the job name when a job name is not provided
+  commit-label:
+    name: Check Commit Label
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: GITHUB CONTEXT
+        env: 
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: CHECK COMMIT
+        run: echo "MESSAGE = ${{ github.event.commits[0].message }}"
+      
+      - name: TRYING TO LOOP
+        run: array=${{ github.event.commits }} ; for something in ${array[@]}; do echo $something.message; done
+        shell: bash
+      
