@@ -2,9 +2,9 @@ jobs:
   main:
     name: Check Commit Message for Tag
     runs-on: windows-latest
-      steps:
-        - name: GITHUB CONTEXT
-          env:
-            GITHUB_CONTEXT: ${{ toJson(github) }}
-          run: echo "$GITHUB_CONTEXT"
+    steps:
+      - name: GITHUB CONTEXT
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
     
