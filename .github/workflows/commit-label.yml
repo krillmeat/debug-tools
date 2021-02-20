@@ -22,6 +22,6 @@ jobs:
         run: echo "MESSAGE = ${{ github.event.commits[0].message }}"
       
       - name: TRYING TO LOOP
-        run: for /F "tokens=2 delims==" %%s in ('${{ github.event.commits }}') do echo %%s
+        run: for something in ('${{ github.event.commits }}') do echo "$something"
         shell: bash
       
